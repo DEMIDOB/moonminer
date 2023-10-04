@@ -66,6 +66,12 @@ function keyPressed() {
     }
 }
 
+function touchesEnded() {
+    if (isMobile && gameOver && mouseY > height / 2 + 70 - 20 && mouseY < height / 2 + 70 + 10) {
+        reset();
+    }
+}
+
 function draw() {
     background(220);
 

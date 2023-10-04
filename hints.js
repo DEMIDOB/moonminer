@@ -14,14 +14,10 @@ function displayGameOverHints() {
     text("Score: " + score, width / 2, height / 2 + 45);
     text("Press [R] to restart", width / 2, height / 2 + 70);
 
-    if (isMobile) {
-        if (touches.length > 0) {
-            reset();
-        }
-    } else if (mouseY > height / 2 + 70 - 20 && mouseY < height / 2 + 70 + 10) {
+    if (mouseY > height / 2 + 70 - 20 && mouseY < height / 2 + 70 + 10) {
         cursor(HAND);
 
-        if (mouseIsPressed || touches.length > 0) {
+        if (mouseIsPressed) {
             reset();
             cursor(ARROW);
         }
