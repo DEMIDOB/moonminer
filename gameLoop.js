@@ -1,13 +1,40 @@
 function gameLoop() {
     transformTerrain();
-
     movePlayer();
-
     moveEnemy();
-
     displayScore();
 
     gameOver = checkIfGameIsOver();
+}
+
+function moveMap() {
+    // let offsetDiff = Math.round(bx - width / 2 / mapRenderStep) - mDrawOffset;
+    // if (offsetDiff > width / 4 / mapRenderStep || mDrawOffsetSpeed > 0 && offsetDiff > width / 2 / mapRenderStep) {
+    //     mDrawOffsetSpeed = offsetDiff / 50;
+    // } else {
+    //     mDrawOffsetSpeed = 0;
+    // }
+
+    if (bx - mDrawOffset > width / mapRenderStep) {
+        mDrawOffsetSpeed = 10 / mapRenderStep;
+    }
+
+    if (mDrawOffsetSpeed > 0 && Math.round(bx - width / 2 / mapRenderStep) - mDrawOffset < 0) {
+        mDrawOffsetSpeed = 0;
+    }
+
+    if (gameOver && keyIsPressed) {
+        switch(keyCode) {
+            case 37: case 65:
+                mDrawOffset -= 5 / mapRenderStep;
+                break;
+            case 39: case 68:
+                mDrawOffset += 5 / mapRenderStep;
+                break;
+        }
+    } else {
+        mDrawOffset += mDrawOffsetSpeed;
+    }
 }
 
 function transformTerrain() {

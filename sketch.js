@@ -1,5 +1,5 @@
 let m;
-let mDrawOffset = 0;
+let mDrawOffset = 0, mDrawOffsetSpeed = 0;
 let bx;
 let bvx = 0;
 
@@ -15,8 +15,11 @@ let enemyX;
 
 let gameOver = false;
 
+var isMobile = false;
+
 function setup() {
     createCanvas(windowWidth, windowHeight);
+
     reset();
 }
 
@@ -40,9 +43,10 @@ function mousePressed() {
     if (mouseY < 100) {
         reset();
     }
-//     bx = mouseX + mDrawOffset * mapRenderStep;
-//     bx /= mapRenderStep;
-//     bvx = 0;
+
+    if (gameOver && isMobile) {
+        reset();
+    }
 }
 
 function keyPressed() {
@@ -65,25 +69,13 @@ function keyPressed() {
 function draw() {
     background(220);
 
-    // let offsetDiff = Math.round(bx - width / 2 / mapRenderStep) - mDrawOffset;
-    // if (offsetDiff > width / 4 / mapRenderStep) {
-    //     mDrawOffset += offsetDiff;
-    // }
+    if (touches.length > 0) {
+        isMobile = true;
+    }
 
     m.display(mapRenderStep, mDrawOffset);
 
-    if (keyIsPressed) {
-        switch(keyCode) {
-            case 37: case 65:
-//                 bax = max(-Math.abs(bax * 1.1), bax - 0.05);
-                mDrawOffset -= 5 / mapRenderStep;
-                break;
-            case 39: case 68:
-                // bax = min(Math.abs(bax * 1.1), bax + 0.05);
-                mDrawOffset += 5 / mapRenderStep;
-                break;
-        }
-    }
+    moveMap();
 
     if (!gameOver) {
         gameLoop();
