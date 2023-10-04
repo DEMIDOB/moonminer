@@ -13,7 +13,7 @@ class Map {
     }
 
     createRegion(regIdx) {
-        console.log(regIdx);
+        console.log("Generating region", regIdx);
         this.regions[regIdx] = new Region(regIdx * REGION_SIZE, this.noiseStep);
     }
 

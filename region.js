@@ -30,8 +30,6 @@ class Region {
             this.generate();
         }
 
-        console.log(by);
-
         this.heightMap[localX] -= by;
     }
 }
