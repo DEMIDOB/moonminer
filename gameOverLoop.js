@@ -9,8 +9,5 @@ function gameOverLoop() {
     textSize(60);
     text("Game Over!", width / 2, height / 2);
 
-    textSize(20);
-    fill(0);
-    text("Score: " + score, width / 2, height / 2 + 40);
-    text("Press R to restart", width / 2, height / 2 + 60);
+    displayGameOverHints();
 }

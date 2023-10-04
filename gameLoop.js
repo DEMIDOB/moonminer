@@ -16,8 +16,8 @@ function transformTerrain() {
         let heightAtMouseX = m.getHeightAt(inGameMouseX);
         let relMouseY = 1 - mouseY / height;
         m.mineAt(inGameMouseX, miningRadius, 0.1 * (heightAtMouseX - relMouseY));
-        circle(mouseX, mouseY, miningRadius);
     }
+    circle(mouseX, mouseY, miningRadius);
 }
 
 function checkIfGameIsOver() {
@@ -26,7 +26,7 @@ function checkIfGameIsOver() {
 
 function displayScore() {
     score = max(Math.floor((bx - width / 2 / mapRenderStep) * 0.1 * mapRenderStep), score);
-    
+
     fill(0);
     textAlign(LEFT);
     textSize(30);

@@ -1,5 +1,6 @@
 function moveEnemy() {
     enemyX += enemyVx;
+    enemyVx += 0.0003;
 }
 
 function displayEnemy() {

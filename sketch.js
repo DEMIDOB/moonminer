@@ -17,8 +17,6 @@ let gameOver = false;
 
 function setup() {
     createCanvas(windowWidth, windowHeight);
-    // createCanvas(400, 400);
-
     reset();
 }
 
@@ -51,6 +49,9 @@ function keyPressed() {
     switch (key) {
         case 's':
             mineSign *= -1;
+            break;
+        case '`':
+            gameOver = true;
             break;
     }
 
@@ -93,12 +94,7 @@ function draw() {
     displayPlayer();
     displayEnemy();
 
-    noStroke();
-    fill(100);
-    textSize(15);
-    textAlign(RIGHT);
-    text("Use arrow keys or A-D to move the camera", width - 20, height - 20);
-    text("Click to transform the terrain", width - 20, height - 40);
+    displayDesktopControlsHints();
 
     // noFsuseX + miningRadius, 0, mouseX + miningRadius, height);
 }
