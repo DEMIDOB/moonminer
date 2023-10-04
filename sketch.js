@@ -11,6 +11,10 @@ const ballRadius = 5;
 let score = 0;
 let mineSign = 1, miningRadius = 20;
 
+let enemyX;
+
+let gameOver = false;
+
 function setup() {
     createCanvas(windowWidth, windowHeight);
     // createCanvas(400, 400);
@@ -27,6 +31,11 @@ function reset() {
     bvx = 0;
     mDrawOffset = 0;
     score = 0;
+
+    gameOver = false;
+
+    enemyX = bx - width / 2 / mapRenderStep + 1;
+    enemyVx = 0.8;
 }
 
 function mousePressed() {
@@ -42,54 +51,54 @@ function keyPressed() {
     switch (key) {
         case 's':
             mineSign *= -1;
+            break;
+    }
+
+    switch (keyCode) {
+        case 82: // r
+            reset();
+            break;
     }
 }
 
 function draw() {
     background(220);
 
-//     mDrawOffset = Math.round(bx - width / 2 / mapRenderStep);
-    m.display(mapRenderStep, mDrawOffset);
+    // let offsetDiff = Math.round(bx - width / 2 / mapRenderStep) - mDrawOffset;
+    // if (offsetDiff > width / 4 / mapRenderStep) {
+    //     mDrawOffset += offsetDiff;
+    // }
 
-    let bax = m.getGradientAt(bx) * 10 / mapRenderStep;
+    m.display(mapRenderStep, mDrawOffset);
 
     if (keyIsPressed) {
         switch(keyCode) {
-            case 37:
+            case 37: case 65:
 //                 bax = max(-Math.abs(bax * 1.1), bax - 0.05);
                 mDrawOffset -= 5 / mapRenderStep;
                 break;
-            case 39:
+            case 39: case 68:
                 // bax = min(Math.abs(bax * 1.1), bax + 0.05);
                 mDrawOffset += 5 / mapRenderStep;
                 break;
         }
     }
 
-    if (mouseIsPressed || touches.length > 0) {
-        let inGameMouseX = Math.round(mouseX / mapRenderStep + mDrawOffset);
-        let heightAtMouseX = m.getHeightAt(inGameMouseX);
-        let relMouseY = 1 - mouseY / height;
-        m.mineAt(inGameMouseX, miningRadius, 0.1 * (heightAtMouseX - relMouseY));
-        circle(mouseX, mouseY, miningRadius);
+    if (!gameOver) {
+        gameLoop();
+    } else {
+        gameOverLoop();
     }
 
-    bvx *= 1 - friction;
-    bvx += bax;
-    bx += bvx;
-    if (bx <= 1) {
-        bx = 1;
-        bvx *= -1;
-        bx += bvx;
-    }
-    let by = m.getHeightAt(bx);
-    fill(0);
+    displayPlayer();
+    displayEnemy();
+
     noStroke();
-    circle((bx - mDrawOffset) * mapRenderStep, height * (1 - by) - ballRadius, ballRadius * 2);
-
-    score = max(Math.floor((bx - width / 2 / mapRenderStep) * 0.1 * mapRenderStep), score);
-    textSize(30);
-    text("Score: " + score, 20, 40);
+    fill(100);
+    textSize(15);
+    textAlign(RIGHT);
+    text("Use arrow keys or A-D to move the camera", width - 20, height - 20);
+    text("Click to transform the terrain", width - 20, height - 40);
 
     // noFsuseX + miningRadius, 0, mouseX + miningRadius, height);
 }
